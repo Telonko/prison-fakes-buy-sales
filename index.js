@@ -83,7 +83,7 @@
                 getPage = params => {
                     return new Promise(resolve => {
                         setTimeout(async () => {
-                            const r = await fetch(`http://${document.domain}/prison/universal.php`, {
+                            const r = await fetch('http://' + document.domain + '/prison/universal.php', {
                                 method: 'POST',
                                 body: params,
                                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -164,7 +164,7 @@
                             if (opt.tab !== existRows[row - 1]) {
                                 continue
                             }
-                            let resp = await getPage(`${params}&method=specialLimitedOffers.buyOffer&optionId=${opt.id}&launchId=${launchID}`)
+                            let resp = await getPage(params + `&method=specialLimitedOffers.buyOffer&optionId=${opt.id}&launchId=${launchID}`)
                             if (resp) {
                                 resp = JSON.parse(resp)
                                 if (resp.code === 0 && resp.result && resp.result.rewards) {
@@ -184,7 +184,7 @@
                     if (id > 0 && cap > status) {
                         for (let i = status; i < cap; ++i) {
                             try {
-                                let resp = await getPage(`${params}&method=birthdayPresent.claim&unit=${i}`)
+                                let resp = await getPage(params + '&method=birthdayPresent.claim&unit=' + i)
                                 if (resp) {
                                     resp = JSON.parse(resp)
                                 }
