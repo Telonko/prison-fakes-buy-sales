@@ -153,7 +153,7 @@
                     }
                 }
 
-                if (launchID > 0) {
+                if (launchID > 0 && rows[0].length > 0) {
                     log('Начинаем покупать акции барыги')
                     for (let row of rows) {
                         row = parseInt(row)
@@ -183,19 +183,15 @@
 
                     if (id > 0 && cap > status) {
                         for (let i = status; i < cap; ++i) {
-                            try {
-                                let resp = await getPage(params + '&method=birthdayPresent.claim&unit=' + i)
-                                if (resp) {
-                                    resp = JSON.parse(resp)
-                                }
-                                if (!resp || resp.code > 0 || !resp.rewards) {
-                                    log('ошибка сбора с Люси #' + i + ' ', true)
-                                    break
-                                }
-                                log('собрали с Люси #' + i + ' ' + logRewards(resp.rewards))
-                            } catch (e) {
-                                log('ошибка сбора с Люси #' + i + ' / ' + e)
+                            let resp = await getPage(params + '&method=birthdayPresent.claim&unit=' + id)
+                            if (resp) {
+                                resp = JSON.parse(resp)
                             }
+                            if (!resp || resp.code > 0 || !resp.rewards) {
+                                log('ошибка сбора с Люси #' + i + ' ', true)
+                                break
+                            }
+                            log('собрали с Люси #' + i + ' ' + logRewards(resp.rewards))
                         }
                     }
                 }
